@@ -1,3 +1,3 @@
+const [,,animal] = ['tea', 'button', 'cat']
 
-
-console.log()
+console.log(animal)
