@@ -24,15 +24,15 @@
 // }
 
 // this is faster than using RegExp
-function isAlphaNumeric(char) {
-    var code = char.charCodeAt(0)
-    if ((code > 47 && code < 58) ||
-        (code > 64 && code < 91) ||
-        (code > 96 && code < 123)) {
-            return true;
-        }
-    return false;
-}
+// function isAlphaNumeric(char) {
+//     var code = char.charCodeAt(0)
+//     if ((code > 47 && code < 58) ||
+//         (code > 64 && code < 91) ||
+//         (code > 96 && code < 123)) {
+//             return true;
+//         }
+//     return false;
+// }
 
 // function charCount(str) {
 //     var obj = {};
