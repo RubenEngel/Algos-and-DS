@@ -7,60 +7,80 @@ class Graph {
         this.adjacencyList = {};
     }
 
-    addVertex(vertex: string) {
-        if (!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
+    addNode(node: string) {
+        if (!this.adjacencyList[node]) this.adjacencyList[node] = [];
 
     }
 
-    addEdge(vertex1: string, vertex2: string) {
-        if (!this.adjacencyList[vertex1]) this.addVertex(vertex1)
-        if (!this.adjacencyList[vertex2]) this.addVertex(vertex2)
-        this.adjacencyList[vertex1].push(vertex2)
-        this.adjacencyList[vertex2].push(vertex1)
+    addEdge(node1: string, node2: string) {
+        if (!this.adjacencyList[node1]) this.addNode(node1)
+        if (!this.adjacencyList[node2]) this.addNode(node2)
+        this.adjacencyList[node1].push(node2)
+        this.adjacencyList[node2].push(node1)
     }
 
-    removeEdge(vertex1: string, vertex2: string) {
-        this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(el => el !== vertex2)
-        this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(el => el !== vertex1)
+    removeEdge(node1: string, node2: string) {
+        this.adjacencyList[node1] = this.adjacencyList[node1].filter(el => el !== node2)
+        this.adjacencyList[node2] = this.adjacencyList[node2].filter(el => el !== node1)
     }
 
-    removeVertex(vertex: string) {
-        this.adjacencyList[vertex].forEach((el) => {
-            this.removeEdge(el, vertex)
+    removeNode(node: string) {
+        this.adjacencyList[node].forEach((el) => {
+            this.removeEdge(el, node)
         })
-        delete this.adjacencyList[vertex]
+        delete this.adjacencyList[node]
     }
 
-    depthFirstRecursive(start: string) {
+    depthFirstRecursive(startNode: string) {
         const result = [] as string[];
-        const visited = {} as { [vertex: string]: boolean };
-        const dfs = (vertex: string) => {
-            if (!vertex) return;
-            visited[vertex] = true;
-            result.push(vertex);
-            this.adjacencyList[vertex].forEach((adjVertex: string) => {
-                if (!visited[adjVertex]) dfs(adjVertex);
+        // const visited = {} as { [node: string]: boolean };
+        const dfs = (node: string) => {
+            // visited[node] = true;
+            result.push(node);
+            // this.adjacencyList[node].forEach((adjNode: string) => {
+            //     if (!visited[adjNode]) dfs(adjNode);
+            // })
+            this.adjacencyList[node].forEach((adjNode: string) => {
+                if (!result.includes(adjNode)) dfs(adjNode);
             })
         }
-        dfs(start);
+        dfs(startNode);
         return result;
     }
 
-    depthFirstIterative(start: string) {
-        const stack = [start] as string[];
-        const visited = { [start]: true } as { [vertex: string]: boolean }
+    depthFirstIterative(startNode: string) {
+        const stack = [startNode] as string[];
+        const seen = { [startNode]: true } as { [node: string]: boolean }
         const result = [] as string[];
-        let currVertex: string;
+        let currNode: string;
         while (stack.length) {
-            console.log(stack)
-            currVertex = stack.pop()!;
-            result.push(currVertex);
-            this.adjacencyList[currVertex].forEach((adjVertex: string) => {
-                if (!visited[adjVertex]) {
-                    visited[adjVertex] = true;
-                    stack.push(adjVertex)
+            currNode = stack.pop()!;
+            result.push(currNode);
+            this.adjacencyList[currNode].forEach((adjNode: string) => {
+                if (!seen[adjNode]) {
+                    seen[adjNode] = true;
+                    stack.push(adjNode)
                 }
             }) 
+        }
+        return result;
+    }
+
+    breadthFirstSearch(startNode: string) {
+        const queue = [] as string[];
+        const result = [] as string[];
+        const seen = {} as {[node: string]: boolean}
+        seen[startNode] = true;
+        queue.push(startNode);
+        while (queue.length) {
+            let currNode = queue.shift() as string;
+            result.push(currNode);
+            this.adjacencyList[currNode].forEach((adjNode: string) => {
+                if (!seen[adjNode]) {
+                    seen[adjNode] = true;
+                    queue.push(adjNode)
+                }
+            })
         }
         return result;
     }
@@ -68,13 +88,12 @@ class Graph {
 
 const g = new Graph()
 
-g.addVertex("A")
-g.addVertex("B")
-g.addVertex("C")
-g.addVertex("D")
-g.addVertex("E")
-g.addVertex("F")
-
+g.addNode("A")
+g.addNode("B")
+g.addNode("C")
+g.addNode("D")
+g.addNode("E")
+g.addNode("F")
 
 g.addEdge("A", "B")
 g.addEdge("A", "C")
@@ -84,5 +103,14 @@ g.addEdge("D","E")
 g.addEdge("D","F")
 g.addEdge("E","F")
 
-// console.log(g.depthFirstRecursive("A"))
-console.log(g.depthFirstIterative("A"))
+//          A
+//        /   \
+//       B     C
+//       |     |
+//       D --- E
+//        \   /
+//          F
+
+console.log(g.depthFirstRecursive("A"))
+// console.log(g.depthFirstIterative("A"))
+// console.log(g.breadthFirstSearch("A"))
