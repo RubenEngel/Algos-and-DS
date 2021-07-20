@@ -1,4 +1,4 @@
-class PriorityQueue {
+class PriorityQueue { // Needs upgrading
     values: { val: string, priority: number }[];
     constructor() {
         this.values = [];
