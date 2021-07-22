@@ -1,4 +1,4 @@
-class PriorityQueue { // Needs upgrading
+class PriorityQueue { // Needs upgrading to binary heap
     values: { val: string, priority: number }[];
     constructor() {
         this.values = [];
