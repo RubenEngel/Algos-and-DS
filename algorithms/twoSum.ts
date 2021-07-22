@@ -31,23 +31,35 @@
 //     return null;
 // };
 
-// using hash map
+// using hash map - double pass
+// function twoSum(nums: number[], target: number): number[] | null { 
+//     const map = new Map()
+//     for (let i = 0; i < nums.length; i++) {
+//         // set key as the number, and value as the index
+//         map.set(nums[i], i)
+//     }
+//     for (let i = 0; i < nums.length; i++) {
+//         let desired = target - nums[i]
+//         if (map.has(desired) && map.get(desired) !== i) {
+//             return [i, map.get(desired)]
+//         }
+//     }
+//     return null;
+// };
+
+// using hash map - single pass
 function twoSum(nums: number[], target: number): number[] | null { 
     const map = new Map()
     for (let i = 0; i < nums.length; i++) {
+        let desired = target - nums[i];
+        if (map.has(desired)) {
+            return [map.get(desired), i]
+        }
         // set key as the number, and value as the index
         map.set(nums[i], i)
     }
-    for (let i = 0; i < nums.length; i++) {
-        let desired = target - nums[i]
-        if (map.get(desired) && map.get(desired) !== i) {
-            return [i, map.get(desired)]
-        }
-    }
     return null;
 };
-
-
 
 const nums = [2,5,5,11]
 
