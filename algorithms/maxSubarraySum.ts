@@ -1,4 +1,4 @@
-// function maxSubarraySum(numArray: number[], subArrayLength: number){
+// function maxSubArraySum(numArray: number[], subArrayLength: number){
 //     if (numArray.length < subArrayLength) return null;
 //     let i = 0;
 //     let j = subArrayLength;
@@ -17,7 +17,7 @@
 //     return [maxSubArray, maxSum];
 // }
 
-function maxSubarraySum(numArray: number[], subArrayLength: number){
+function maxSubArraySum(numArray: number[], subArrayLength: number){
     let tempSum = 0;
     for (let i = 0; i < subArrayLength; i++) {
         tempSum += numArray[i];
@@ -33,6 +33,6 @@ function maxSubarraySum(numArray: number[], subArrayLength: number){
 const numArray = [1,5,8,4,2,8,0,3,21,6,8,84,2,2,1,4];
 const subArrayLength = 4;
 
-const ans = maxSubarraySum(numArray, subArrayLength);
+const ans = maxSubArraySum(numArray, subArrayLength);
 
 console.log(ans);
